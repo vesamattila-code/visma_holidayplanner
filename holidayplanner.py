@@ -1,4 +1,7 @@
 import pandas as pd
+import datetime
+from datetime import date, timedelta, datetime
+
 class HolidayRangeTooWide(Exception):
     pass
     
@@ -20,8 +23,25 @@ class HolidayPlanner():
         delta = end - start
         if delta.days > self.holiday_max_range:
             raise HolidayRangeTooWide
+        #holidays_count=official_holidays_in_range(start,end)
+        holidays_count=0
+        holidays_needed = self.calculate_holidays_needed(delta.days,self.sundays_in_range(start,end), holidays_count)
+        return holidays_needed
+        
+    def sundays_in_range(self,start,end):
+        d0 = start
+        d1 = end
+        d0 += timedelta(days=6 - d0.weekday())  # First Sunday
         day_count = 0
-        #official_holidays_in_range(start,end)
-        #sundays_in_range(start,end)
-        #calculate_holidays_needed()
+        while d0 <= d1:
+            # check yield usage in this function?
+            d0 += timedelta(days=7)
+            day_count += 1
         return day_count
+        
+    def calculate_holidays_needed(self,days, sundays,holidays):
+        return days-sundays-holidays
+        
+    def official_holidays_in_range(self, start, end):
+        pass
+        
