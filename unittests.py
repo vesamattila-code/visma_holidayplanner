@@ -1,6 +1,8 @@
 import unittest
 from holidayplanner import HolidayPlanner,HolidayStartLaterThanEnd,HolidayRangeTooWide
+import datetime
 from datetime import date, timedelta, datetime
+import pandas as pd
 
 
 class TestHolidayPlanner(unittest.TestCase):
@@ -35,10 +37,35 @@ class TestHolidayPlanner(unittest.TestCase):
         planner = HolidayPlanner()
         self.assertEqual(planner.sundays_in_range(date(2020,10,1),date(2020,10,31)),4)
         
-    def test_days_needed_valid_month(self):
+    def test_official_holidays_in_range(self):
         planner = HolidayPlanner()
-        planner.days_needed(date(2020,10,1),date(2020,10,31))
-        self.assertEqual(planner.days_needed(date(2020,10,1),date(2020,10,31)),26)
+        result = planner.official_holidays_in_range(date(2020,1,1), date(2020,10,31))
+        
+    def test_days_needed_valid_month_25_days(self):
+        planner = HolidayPlanner()
+        self.assertEqual(planner.days_needed(date(2020,1,1),date(2020,1,31)),25)
+        
+    def test_days_needed_valid_month_15_days(self):
+        planner = HolidayPlanner()
+        self.assertEqual(planner.days_needed(date(2020,4,10),date(2020,5,1)),16)
+        
+    def test_days_needed_valid_month_year_changing(self):
+        planner = HolidayPlanner()
+        self.assertEqual(planner.days_needed(date(2020,12,25),date(2021,1,7)),9)
+        
+    def test_days_needed_one_day_scope(self):
+        planner = HolidayPlanner()
+        self.assertEqual(planner.days_needed(date(2021,12,25),date(2021,12,25)),1)
+        
+    def test_days_needed_without_fake_sunday_added(self):
+        planner = HolidayPlanner()
+        self.assertEqual(planner.days_needed(date(2020,10,1),date(2020,10,30)),26)
+        
+    def test_days_needed_with_fake_sunday_added(self):
+        planner = HolidayPlanner('holiday_dates_with_fake_sunday_11102020.csv')
+        self.assertEqual(planner.days_needed(date(2020,10,1),date(2020,10,30)),26)
+    
+        
 
     
         
