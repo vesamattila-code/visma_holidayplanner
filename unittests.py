@@ -30,7 +30,11 @@ class TestHolidayPlanner(unittest.TestCase):
         planner = HolidayPlanner()
         with self.assertRaises(HolidayRangeTooWide):
             planner.days_needed(date(2020,10,1),date(2020,12,1))
-    
+        
+    def test_sundays_in_range(self):
+        planner = HolidayPlanner()
+        self.assertEqual(planner.sundays_in_range(date(2020,10,1),date(2020,10,31)),4)
+        
     def test_days_needed_valid_month(self):
         planner = HolidayPlanner()
         planner.days_needed(date(2020,10,1),date(2020,10,31))
