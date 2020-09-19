@@ -15,12 +15,10 @@ class TestHolidayPlanner(unittest.TestCase):
     def test_planner_with_empty_param(self):
         with self.assertRaises(FileNotFoundError):    
             HolidayPlanner('non_existing_file')
-        pass
         
     def test_planner_with_non_string(self):
         with self.assertRaises(ValueError):    
             HolidayPlanner(123)
-        pass
     
         
 
