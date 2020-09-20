@@ -34,3 +34,7 @@ Initial thoughts on task:
       - curreent file as default param for the class init?
       
    
+Refactored first implemantation. 
+
+   -separated CVS handling to own class. If in future we want use different way handling holidays accessing,
+    handler is easy to replace. Logic in HolidayPlanner stays the same.
