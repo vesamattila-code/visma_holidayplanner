@@ -13,6 +13,7 @@ class HolidayStartLaterThanEnd(Exception):
 HOLIDAY_MAX_RANGE = 50
 
 class HolidayAccess():
+    """Generic interface class to official holiday info."""
 
     def __init__(self,access = 0):
         self.access = access
@@ -27,6 +28,7 @@ class HolidayAccess():
         self.access = access
 
 class HolidayCVSHandler(HolidayAccess):
+    """Holiday data handler."""
 
     def __init__(self, access):
         HolidayAccess.__init__(self,access)
@@ -51,6 +53,7 @@ class HolidayCVSHandler(HolidayAccess):
 
 
 class HolidayPlanner():
+    """Holiday planner class."""
 
     def __init__(self, holiday_access):
         self.holiday_handler = holiday_access
